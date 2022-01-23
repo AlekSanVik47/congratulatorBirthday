@@ -43,9 +43,11 @@ public class MainClass {
         System.out.println(inPeriod);
         Scanner in = new Scanner(System.in);
         defaultPeriod = parseInt(in.next());
-
+        in.close();
         WritingToFile writing = new WritingToFile();
-        writing.inputFile(listOfBirthdays.formatList(defaultPeriod, today, listOfBirthdays.getList(defaultPeriod, today, listBirthdays)), Path.of("birthdaysEmployees"));
+        writing.inputFile(listOfBirthdays.formatList(defaultPeriod, today, listOfBirthdays.getList(defaultPeriod, today, listBirthdays)),
+                Path.of("birthdaysEmployees"));
+//        writing.outFile(Path.of("birthdaysEmployees"));
     }
 
 }

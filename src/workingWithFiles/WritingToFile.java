@@ -5,9 +5,13 @@ import listBirthdays.Dates;
 import listBirthdays.Employee;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
@@ -21,12 +25,6 @@ public class WritingToFile implements inpDataOut {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileBirthdays));
         out.writeObject(listBirthdays);
         out.close();
-
-      /*  BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileBirthdays));
-        if (!listBirthdays.isEmpty()){
-            bufferedWriter.write(String.valueOf(listBirthdays));
-            bufferedWriter.close();
-        }*/
         return String.valueOf(listBirthdays);
     }
     static void bufferedReaderInput(File file) throws IOException {
@@ -36,11 +34,15 @@ public class WritingToFile implements inpDataOut {
             System.out.println(s);
         }
     }
-   /* public String outputFile(Path outFile) throws IOException {
+    public String outFile(Path outFile) throws IOException, ClassNotFoundException {
         Path file = Paths.get(String.valueOf(outFile));
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(String.valueOf(outFile)));
+        inputStream.readObject();
+        inputStream.close();
         List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+        System.out.println(lines);
         return String.join("\n", lines);
-    }*/
+    }
 
     @Override
     public void textInfo(String text, Path filePath) throws IOException {
