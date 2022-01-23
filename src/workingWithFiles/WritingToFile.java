@@ -108,20 +108,6 @@ public class WritingToFile implements inpDataOut {
 //        writing.inputFile(allList, Path.of("/home/alexander-av/IdeaProjects/congratulator/birthdaysEmployees"));
     }
 
-    private static void upcomingBirthdays(LocalDate birtEmployee, Dates dates, Birthdays birthdays) {
-        int minPeriod = 30;
-     /*   for (Birthdays bd: birthdays) {
-
-        }*/
-    /*    Map<Employee, LocalDate> upcomingBirthdays = new HashMap<>();
-
-        for (Map.Entry<Employee, LocalDate> entry: upcomingBirthdays.entrySet()){
-            if (dates.compareDates(minPeriod, birtEmployee)) {
-                System.out.printf(" %20 День рождения в ближайшие %d дней%n %20s день рождения %s%n",
-                        minPeriod, entry.getKey(), entry.getValue());
-            }
-        }*/
-    }
     private static void printListConsole(Map<Employee, String> allList) {
         for (Map.Entry<Employee, String> entry: allList.entrySet()){
             System.out.printf(" %20s день рождения %s%n",entry.getKey(), entry.getValue());
