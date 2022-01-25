@@ -13,12 +13,12 @@ public class BirthdayData {
 
     private static void connect() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbs:sqlite:birthday");
+        connection = DriverManager.getConnection("jdbc:sqlite:birthday");
         statement = connection.createStatement();
         System.out.println("База подключена!");
     }
 
-    private static void disconnect() throws SQLException{
+    private static void disconnect() throws SQLException {
         try {
             statement.close();
         } catch (SQLException e) {
@@ -32,7 +32,7 @@ public class BirthdayData {
     }
 
     private static void createDB() throws SQLException {
-        statement.executeUpdate("CREATE TABLE NOT EXISTS [birthday-users] (\n" +
+        statement.executeUpdate("CREATE TABLE IF NOT EXISTS [birthday-users] (\n" +
                 "    id       INTEGER PRIMARY KEY AUTOINCREMENT\n" +
                 "    NOT NULL,\n" +
                 "    surname  STRING  NOT NULL,\n" +
@@ -55,8 +55,8 @@ public class BirthdayData {
     }
 
     private static PreparedStatement pSChangeData() throws SQLException {
-       pSChangeData = connection.prepareStatement("UPDATE 'birthday-users' SET (surname, name, birthday) VALUES (?, ?, ?)");
-       return pSChangeData;
+        pSChangeData = connection.prepareStatement("UPDATE 'birthday-users' SET (surname, name, birthday) VALUES (?, ?, ?)");
+        return pSChangeData;
     }
 
     private static boolean pSChangeData(String surname, String name, LocalDate birthday) throws SQLException {
@@ -68,7 +68,28 @@ public class BirthdayData {
         return true;
     }
 
-    private static  PreparedStatement pSGetBirthdayByNameAndSurname() throws SQLException{
+    private static PreparedStatement pSGetBirthdayByNameAndSurname() throws SQLException {
+        pSGetBirthdayByNameAndSurname = connection.prepareStatement("SELECT birthday FROM 'birthday'  WHERE  surname = ? AND name = ?; ");
+        return pSGetBirthdayByNameAndSurname;
+    }
+
+    public static String getBirthdayByNameAndSurname (String surname, String name) throws SQLException {
+       LocalDate birthday = null;
+        pSGetBirthdayByNameAndSurname.setString(2, surname);
+        pSGetBirthdayByNameAndSurname.setString(3, name);
+        ResultSet resultSet = pSGetBirthdayByNameAndSurname.executeQuery();
+        if (resultSet.next()) {
+            birthday = resultSet.getDate("birthday").toLocalDate();
+        }
+        return String.valueOf(birthday);
+    }
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+       connect();
+       createDB();
+       registration("Иванов", "Иван", LocalDate.parse("1970-02-12"));
+       disconnect();
+
 
     }
 }
