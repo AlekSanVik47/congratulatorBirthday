@@ -5,43 +5,59 @@ import listBirthdays.Dates;
 import listBirthdays.Employee;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
 
-public class WritingToFile implements inpDataOut {
+public class WritingReadToFile implements inputDataOut {
+
 
     @Override
-    public String inputFile(Map<Employee, String> listBirthdays, Path input) throws IOException {
-        File fileBirthdays = new File(String.valueOf(input));
-        listBirthdays = new HashMap<>();
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileBirthdays));
-        out.writeObject(listBirthdays);
-        out.close();
-        return String.valueOf(listBirthdays);
+    public void inputFileToText(Map<Employee, String> listBirthdays, Path input) {
+        try {
+            File fileBirthdays = new File(String.valueOf(input));
+            FileOutputStream fos = new FileOutputStream(fileBirthdays);
+            PrintWriter printWriter = new PrintWriter(fos);
+            for (Map.Entry<Employee, String> entry : listBirthdays.entrySet()) {
+                printWriter.println(entry.getKey() + " " + entry.getValue());
+            }
+            printWriter.flush();
+            printWriter.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    static void bufferedReaderInput(File file) throws IOException {
+
+    @Override
+    public void bufferedReaderInput(File file) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         String s = "";
         while ((s = br.readLine()) != null) {
             System.out.println(s);
         }
     }
-    public String outFile(Path outFile) throws IOException, ClassNotFoundException {
-        Path file = Paths.get(String.valueOf(outFile));
-        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(String.valueOf(outFile)));
-        inputStream.readObject();
-        inputStream.close();
-        List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
-        System.out.println(lines);
-        return String.join("\n", lines);
+
+    public String outFile(Path outFile) {
+        try {
+            Path file = Paths.get(String.valueOf(outFile));
+            FileInputStream inputStream = new FileInputStream(String.valueOf(file));
+            inputStream.read();
+            Scanner in = new Scanner(inputStream);
+            Map<Employee, String> employeeStringMap = new HashMap<>();
+
+            inputStream.close();
+            System.out.println(employeeStringMap);
+            return String.valueOf(employeeStringMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -56,7 +72,7 @@ public class WritingToFile implements inpDataOut {
 
 
     public static void main(String[] args) throws IOException {
-        WritingToFile writing = new WritingToFile();
+        WritingReadToFile writing = new WritingReadToFile();
         LocalDate birtEmployee = LocalDate.of(1970, 1, 25);
         LocalDate birtEmployee1 = LocalDate.of(1965, 9, 15);
         LocalDate birtEmployee2 = LocalDate.of(1981, 2, 10);
@@ -80,7 +96,7 @@ public class WritingToFile implements inpDataOut {
           /*  birthdays.addBirthday(employee, birtEmployee);
             birthdays.addBirthday(employee1, birtEmployee1);
             birthdays.addBirthday(employee2, birtEmployee2);*/
-        
+
         System.out.println(employeeLocalDateMap);
         
     
@@ -111,8 +127,8 @@ public class WritingToFile implements inpDataOut {
     }
 
     private static void printListConsole(Map<Employee, String> allList) {
-        for (Map.Entry<Employee, String> entry: allList.entrySet()){
-            System.out.printf(" %20s день рождения %s%n",entry.getKey(), entry.getValue());
+        for (Map.Entry<Employee, String> entry : allList.entrySet()) {
+            System.out.printf(" %20s день рождения %s%n", entry.getKey(), entry.getValue());
         }
     }
 }

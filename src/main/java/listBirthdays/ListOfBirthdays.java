@@ -23,6 +23,7 @@ public class ListOfBirthdays {
 
     public Map<Employee, String> formatList(int defaultPeriod, LocalDate today, Map<Employee, LocalDate> formBirthday) {
         Map<Employee, String> form = new HashMap<>();
+        System.out.printf("   День рождения за заданный период: %n%n");
         for (Map.Entry<Employee, LocalDate> employeeLocalDateMap : formBirthday.entrySet()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM");
             form.put(employeeLocalDateMap.getKey(), employeeLocalDateMap.getValue().format(formatter));

@@ -1,8 +1,9 @@
 import listBirthdays.Birthdays;
 import listBirthdays.Employee;
 import listBirthdays.ListOfBirthdays;
-import workingWithFiles.WritingToFile;
+import workingWithFiles.WritingReadToFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public class MainClass {
     public LocalDate dateBirthday;
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         ListOfBirthdays listOfBirthdays = new ListOfBirthdays();
         Birthdays birthdays = new Birthdays();
@@ -44,10 +45,23 @@ public class MainClass {
         Scanner in = new Scanner(System.in);
         defaultPeriod = parseInt(in.next());
         in.close();
-        WritingToFile writing = new WritingToFile();
-        writing.inputFile(listOfBirthdays.formatList(defaultPeriod, today, listOfBirthdays.getList(defaultPeriod, today, listBirthdays)),
-                Path.of("birthdaysEmployees"));
+        WritingReadToFile writing = new WritingReadToFile();
+
+
+        Map<Employee, LocalDate> listBirth = listOfBirthdays.getList(defaultPeriod, today, listBirthdays);
+        System.out.println(listBirth);
+        System.out.println("________________________________");
+
+        Map<Employee, String> listFormBirth = listOfBirthdays.formatList(defaultPeriod, today, listBirth);
+        System.out.println(listFormBirth);
+        System.out.println("________________________________");
+
+        writing.inputFileToText(listFormBirth, Path.of("birthdaysEmployees"));
+
+        System.out.println("________________________________");
+
 //        writing.outFile(Path.of("birthdaysEmployees"));
+        writing.bufferedReaderInput(new File("birthdaysEmployees"));
     }
 
 }
