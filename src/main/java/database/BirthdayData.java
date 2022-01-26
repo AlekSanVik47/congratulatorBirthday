@@ -84,13 +84,5 @@ public class BirthdayData {
         return String.valueOf(birthday);
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-       connect();
-       createDB();
-       registration("Иванов", "Иван", LocalDate.parse("1970-02-12"));
-       disconnect();
-
-
-    }
 }
 

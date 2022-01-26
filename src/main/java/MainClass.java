@@ -60,8 +60,12 @@ public class MainClass {
 
         System.out.println("________________________________");
 
-//        writing.outFile(Path.of("birthdaysEmployees"));
+
         writing.bufferedReaderInput(new File("birthdaysEmployees"));
+
+        System.out.println("________________________________");
+        writing.inputFileToMap(listBirth, Path.of("fileMap"));
+        writing.outputFile(Path.of("fileMap"));
     }
 
 }
