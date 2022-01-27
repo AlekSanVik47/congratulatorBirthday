@@ -46,11 +46,12 @@ public class BirthdayData {
         return pSRegistration;
     }
 
-    public static boolean registration(String surname, String name, LocalDate birthday) throws SQLException {
+    public static boolean registration(String surname, String name, Date birthday) throws SQLException {
         pSRegistration = pSRegistration();
         pSRegistration.setString(1, surname);
         pSRegistration.setString(2, name);
-        pSRegistration.setDate(3, Date.valueOf(birthday));
+        pSRegistration.setDate(3, Date.valueOf(String.valueOf(birthday)));
+        pSRegistration.executeUpdate();
         return true;
     }
 
@@ -84,5 +85,12 @@ public class BirthdayData {
         return String.valueOf(birthday);
     }
 
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+       BirthdayData.connect();
+
+       BirthdayData.registration("Иванов", "Иван", Date.valueOf("1970-02-12"));
+
+       BirthdayData.disconnect();
+    }
 }
 
