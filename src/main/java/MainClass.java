@@ -49,23 +49,17 @@ public class MainClass {
 
 
         Map<Employee, LocalDate> listBirth = listOfBirthdays.getList(defaultPeriod, today, listBirthdays);
-        System.out.println(listBirth);
-        System.out.println("________________________________");
 
         Map<Employee, String> listFormBirth = listOfBirthdays.formatList(defaultPeriod, today, listBirth);
-        System.out.println(listFormBirth);
-        System.out.println("________________________________");
+
 
         writing.inputFileToText(listFormBirth, Path.of("birthdaysEmployees"));
 
-        System.out.println("________________________________");
-
-
         writing.bufferedReaderInput(new File("birthdaysEmployees"));
 
-        System.out.println("________________________________");
-        writing.inputFileToMap(listBirth, Path.of("fileMap"));
-        writing.outputFile(Path.of("fileMap"));
+
+//        writing.inputFileToMap(listBirth, Path.of("fileMap")); //не работает, нужно доработать
+//        writing.outputFile(Path.of("fileMap")); //не работает, нужно доработать
     }
 
 }
