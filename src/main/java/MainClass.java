@@ -60,6 +60,7 @@ public class MainClass {
 
 //        writing.inputFileToMap(listBirth, Path.of("fileMap")); // запись объекта в файл (Map)
 //        writing.outputFile(Path.of("fileMap")); // чтение объекта из файла
+
     }
 
 }
