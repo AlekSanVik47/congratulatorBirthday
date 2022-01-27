@@ -55,8 +55,8 @@ public class MainClass {
 
         writing.inputFileToText(listFormBirth, Path.of("birthdaysEmployees"));
 
-//        writing.bufferedReaderInput(new File("birthdaysEmployees")); // чтение из файла в строку
 
+//        writing.bufferedReaderInput(new File("birthdaysEmployees")); // чтение из файла в строку
 
 //        writing.inputFileToMap(listBirth, Path.of("fileMap")); // запись объекта в файл (Map)
 //        writing.outputFile(Path.of("fileMap")); // чтение объекта из файла
