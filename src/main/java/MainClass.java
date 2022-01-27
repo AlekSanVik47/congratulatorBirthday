@@ -58,8 +58,8 @@ public class MainClass {
         writing.bufferedReaderInput(new File("birthdaysEmployees"));
 
 
-//        writing.inputFileToMap(listBirth, Path.of("fileMap")); //не работает, нужно доработать
-//        writing.outputFile(Path.of("fileMap")); //не работает, нужно доработать
+        writing.inputFileToMap(listBirth, Path.of("fileMap")); //не работает, нужно доработать
+        writing.outputFile(Path.of("fileMap")); //не работает, нужно доработать
     }
 
 }
