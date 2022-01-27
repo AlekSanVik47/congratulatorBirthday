@@ -46,11 +46,11 @@ public class BirthdayData {
         return pSRegistration;
     }
 
-    public static boolean registration(String surname, String name, Date birthday) throws SQLException {
+    public static boolean registration(String surname, String name, String birthday) throws SQLException {
         pSRegistration = pSRegistration();
         pSRegistration.setString(1, surname);
         pSRegistration.setString(2, name);
-        pSRegistration.setDate(3, Date.valueOf(String.valueOf(birthday)));
+        pSRegistration.setString(3,birthday);
         pSRegistration.executeUpdate();
         return true;
     }
@@ -60,11 +60,11 @@ public class BirthdayData {
         return pSChangeData;
     }
 
-    private static boolean pSChangeData(String surname, String name, LocalDate birthday) throws SQLException {
+    private static boolean pSChangeData(String surname, String name, String birthday) throws SQLException {
         pSChangeData = pSRegistration();
         pSChangeData.setString(1, surname);
         pSChangeData.setString(2, name);
-        pSChangeData.setDate(3, Date.valueOf(birthday));
+        pSChangeData.setString(3, birthday);
         pSChangeData.executeUpdate();
         return true;
     }
@@ -75,12 +75,12 @@ public class BirthdayData {
     }
 
     public static String getBirthdayByNameAndSurname (String surname, String name) throws SQLException {
-       LocalDate birthday = null;
+       String birthday = null;
         pSGetBirthdayByNameAndSurname.setString(2, surname);
         pSGetBirthdayByNameAndSurname.setString(3, name);
         ResultSet resultSet = pSGetBirthdayByNameAndSurname.executeQuery();
         if (resultSet.next()) {
-            birthday = resultSet.getDate("birthday").toLocalDate();
+            birthday = resultSet.getString("birthday");
         }
         return String.valueOf(birthday);
     }
@@ -88,7 +88,7 @@ public class BirthdayData {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
        BirthdayData.connect();
 
-       BirthdayData.registration("Иванов", "Иван", Date.valueOf("1970-02-12"));
+       BirthdayData.registration("Петров", "Сергей", "12 февраля 1970");
 
        BirthdayData.disconnect();
     }
